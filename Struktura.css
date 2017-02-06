@@ -1,0 +1,19 @@
+header {
+height: auto;
+    width: 100%;
+    text-align: center;
+    color: cyan;
+}
+
+#container{
+width: 1350px;
+    height: 500px;
+    position: relative;
+    background: black;
+}
+#auto{
+    position: absolute;
+}
+ {
+    color: cyan;
+}
