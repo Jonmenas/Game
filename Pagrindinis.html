@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Projektas</title>
     <link rel="stylesheet" href="Struktura.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 </head>
 <header>
@@ -13,116 +13,56 @@
 <body style="background-color: saddlebrown">
 
 
-
-
-
-
 <p>
 
-    <button onclick="moveRight()" type="button">Pirmyn</button>
-    <button onclick="moveLeft()" type="button">Atgal</button>
-    <button onclick="moveUp()" type="button">Aukstyn</button>
-    <button onclick="moveDown()" type="button">Zemyn</button>
+
+<button onclick="keistiKordinates('#auto', x, y)" type="button">Pirmyn</button>
+<button onclick="moveLeft()" type="button">Atgal</button>
+<button onclick="moveUp()" type="button">Aukstyn</button>
+<button onclick="moveDown()" type="button">Zemyn</button>
+
 
 </p>
 
 <div id="container">
     <div id="img"></div>
-    <img  id="auto"  src="auto.png" width="100" height="60">
+    <img id="auto" src="auto.png" width="100" height="60">
 </div>
 
 
 <script type="text/javascript">
 
 
-
-    function moveRight() {
-        var elem = document.getElementById("auto");
-        var pos=0;
-
-
-
-        var id = setInterval(frame, 10);
-
-        function frame() {
-            if (pos == 125) {
-                clearInterval(id);
-            }
-            else {
-            pos++;
-
-                elem.style.left = pos + '1px';
-
-
-            }
-
-        }
+    auto = {
+        x: 0, y: 0
     }
-
-    function moveLeft() {
-        var elem = document.getElementById("auto");
-
-        var pos=100  ;
-        var id = setInterval(frame, 10);
-
-        function frame() {
-            if (pos ==0) {
-                clearInterval(id);
-            }
-            else
-            {
-                pos--;
-
-                elem.style.left = pos + '1px';
-
-            }
-
+    document.addEventListener('keydown', function (event) {
+//left
+        if (event.keyCode == 37) {
+            auto.x -= 10;
         }
-    }
-
-    function moveUp() {
-
-        var elem = document.getElementById("auto");
-
-        var pos = 0;
-        var id = setInterval(frame, 100);
-
-        function frame() {
-            if (pos == 44) {
-                clearInterval(id);
-            }
-            else {
-                pos++;
-
-                elem.style.bottom = pos + '1px';
-
-
-            }
-
+//top
+        else if (event.keyCode == 57) {
+            auto.y -= 10;
         }
-    }
-
-    function moveDown() {
-        var elem = document.getElementById("auto");
-
-        var pos =44;
-        var id = setInterval(frame, 100);
-
-        function frame() {
-            if (pos == 0) {
-                clearInterval(id);
-            }
-            else {
-                pos--;
-
-                elem.style.bottom = pos + '1px';
-
-            }
-
+//right
+        else if (event.keyCode == 39) {
+            auto.x += 10;
         }
-    }
+//bottom
+        else if (event.keyCode == 40) {
+            auto.y += 10;
+        }
+        keistiKordinates("#auto", auto.x, auto.y);
+    });
+    document.addEventListener('keyup', function (event) {
+        $("#auto").stop(true);
+    });
+
+
 </script>
 
+<script src="jqery.js"></script>
 
 </body>
 
