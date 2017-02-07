@@ -6,43 +6,135 @@
     <link rel="stylesheet" href="Struktura.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
+
 </head>
 <header>
-    <h1> Zaidimas</h1>
+ <h1> Zaidimas</h1>
 </header>
-<body style="background-color: saddlebrown">
+<body style="background-color: white">
+
+<button onclick="pirmyn()">pirmyn</button>
+<button onclick="atgal()">atgal</button>
+<button onclick="zemyn()">aukstyn</button>
+<button onclick="aukstyn()">zemyn</button>
 
 
-<p>
 
-
-<button onclick="keistiKordinates('#auto', x, y)" type="button">Pirmyn</button>
-<button onclick="moveLeft()" type="button">Atgal</button>
-<button onclick="moveUp()" type="button">Aukstyn</button>
-<button onclick="moveDown()" type="button">Zemyn</button>
-
-
-</p>
-
-<div id="container">
+<div id ="contentContainer">
     <div id="img"></div>
     <img id="auto" src="auto.png" width="100" height="60">
-</div>
 
+</div>
 
 <script type="text/javascript">
 
+    function pirmyn() {
+        var elem = document.getElementById("auto");
+        var pos = 0;
+        var id = setInterval(frame, 10);
 
-    auto = {
-        x: 0, y: 0
+        function frame() {
+            if (pos == 135) {
+                clearInterval(id);
+            } else {
+                pos++;
+                elem.style.left = pos + '5px';
+            }
+        }
     }
+    function atgal() {
+        var elem = document.getElementById("auto");
+        var pos =135;
+        var id = setInterval(frame, 10);
+
+        function frame() {
+            if (pos == 0) {
+                clearInterval(id);
+            } else {
+                pos--;
+                elem.style.left = pos + '5px';
+            }
+        }
+    }
+
+    function aukstyn() {
+        var elem = document.getElementById("auto");
+        var pos = 0;
+        var id = setInterval(frame, 10);
+
+        function frame() {
+            if (pos == 10) {
+                clearInterval(id);
+            } else {
+                pos++;
+                elem.style.top = pos + '5px';
+            }
+        }
+    }
+    function zemyn() {
+        var elem = document.getElementById("auto");
+        var pos = 10;
+        var id = setInterval(frame, 10);
+
+        function frame() {
+            if (pos == -10) {
+                clearInterval(id);
+            } else {
+                pos--;
+                elem.style.top = pos + '5px';
+            }
+        }
+    }
+        var Auto = document.querySelector("#auto");
+        var container = document.querySelector("#contentContainer");
+
+        container.addEventListener("click", getClickPosition, false);
+
+        function getClickPosition(e) {
+            var parentPosition = getPosition(e.currentTarget);
+            var xPosition = e.clientX - parentPosition.x - (Auto.clientWidth );
+            var yPosition = e.clientY - parentPosition.y - (Auto.clientHeight );
+
+            Auto.style.left = xPosition + "px";
+            Auto.style.top = yPosition + "px";
+        }
+
+
+function getPosition(el) {
+  var xPos = 0;
+  var yPos = 0;
+
+  while (el) {
+    if (el.tagName == "BODY") {
+
+      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+      var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+      xPos += (el.offsetLeft - xScroll + el.clientLeft);
+      yPos += (el.offsetTop - yScroll + el.clientTop);
+    } else {
+      // for all other non-BODY elements
+      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+    }
+
+    el = el.offsetParent;
+  }
+  return {
+    x: xPos,
+    y: yPos
+  };
+}
+
+
+
     document.addEventListener('keydown', function (event) {
 //left
         if (event.keyCode == 37) {
             auto.x -= 10;
         }
 //top
-        else if (event.keyCode == 57) {
+        else if (event.keyCode == 38) {
             auto.y -= 10;
         }
 //right
@@ -53,9 +145,11 @@
         else if (event.keyCode == 40) {
             auto.y += 10;
         }
+
         keistiKordinates("#auto", auto.x, auto.y);
     });
     document.addEventListener('keyup', function (event) {
+
         $("#auto").stop(true);
     });
 
